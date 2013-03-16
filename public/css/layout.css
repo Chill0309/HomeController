@@ -1,0 +1,140 @@
+body
+{
+	padding: 0px;
+	margin: 0px;
+	font-family: Verdana, sans-serif;
+	background: #dddddd;
+}
+#wrapper
+{
+	padding-left: 10px;
+	padding-right: 10px;
+	min-width: 900px;
+}
+#wrapper2
+{
+	border-left: 1px solid #333;
+	border-right: 1px solid #333;
+}
+#header 
+{
+	height: 18px;
+	background: #3E5B76;
+	font-size: 70%;
+	margin: 0px;
+	padding-top: 2px;
+}
+#accountmenu ul
+{
+	float: right;
+}
+#header ul
+{
+	padding: 0px 0px 0px 10px;
+	margin: 0px;
+	list-style-type: none;
+}
+#header li
+{
+	display:inline;
+}
+#header li a
+{
+	color: #ffffff;
+	text-decoration: none;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-weight: bold;
+	border-left: 1px solid #ffffff;
+}
+#header li a.first
+{
+	padding-left: 0px;
+	border-left: 0px;
+}
+#header2
+{
+	width: 100%;
+	height: 90px;
+	background: #507AAA;
+	position: relative;
+}
+#headertitle a
+{
+	float: left; 
+	color: #ffffff;
+	text-decoration: none;
+	margin-left: 8px;
+	font-weight: bold;
+	font-size: 48px;
+}
+#mainmenu
+{
+	position: absolute;
+	bottom: 5px;
+	margin-top: 0px;
+	font-size: 85%;
+}
+#mainmenu ul
+{
+	padding: 10px;
+	margin: 0px;
+	list-style-type: none;	
+}
+#mainmenu li
+{
+	display: block;
+	float: left;
+	margin: 0px;
+	white-space: nowrap;
+}
+#mainmenu li a.active
+{
+	background-color: #FFFFFF;
+	color: #666666;
+}
+#mainmenu li a
+{
+	color: #ffffff;
+	text-decoration: none;
+	margin: 0px;
+	padding: 5px 10px 5px 10px;
+	font-weight: bold;
+}
+#mainmenu li a:hover
+{
+	background-color: #759FCF;
+}
+#maincontainer
+{
+	margin: 0px;
+	min-height: 400px;
+	background: #ffffff;
+	padding: 10px;
+}
+#footer
+{
+	height: 18px;
+	background: #3E5B76;
+}
+#footer #credits
+{
+	font-size: 70%;
+	float: right;
+	color: #ffffff;
+	padding-right: 8px;
+	padding-top: 1px;
+}
+
+table
+{
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+th, td
+{
+    border: 1px solid #3E5B76;
+    padding: 0px;
+    margin: 0px;
+}

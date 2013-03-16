@@ -1,0 +1,72 @@
+extends ../layout
+
+block content
+  h1 Edit #{item.id}
+  form(method="POST"
+    action="/sensornodes/#{item.id}"
+    enctype="application/x-www-form-urlencoded")
+    p rfgroup:
+      input(type="text"
+        name="rfgroup"
+        id="rfgroup"
+        value="#{item.rfgroup}"
+        size="25"
+        required)
+    p rfnodeid:
+      input(type="text"
+        name="rfnodeid"
+        id="rfnodeid"
+        value="#{item.rfnodeid}"
+        size="25"
+        required)
+    p location:
+      input(type="text"
+        name="location"
+        id="location"
+        value="#{item.location}"
+        size="25"
+        required)
+    p packetversion:
+      input(type="text"
+        name="packetversion"
+        id="packetversion"
+        value="#{item.packetversion}"
+        size="25"
+        required)
+    p pcb:
+      input(type="text"
+        name="pcb"
+        id="pcb"
+        value="#{item.pcb}"
+        size="25")
+    p firmware:
+      input(type="text"
+        name="firmware"
+        id="firmware"
+        value="#{item.firmware}"
+        size="25")
+    p sensors:
+      input(type="text"
+        name="sensors"
+        id="sensors"
+        value="#{item.sensors}"
+        size="25")
+    p updateInterval:
+      input(type="text"
+        name="updateInterval"
+        id="updateInterval"
+        value="#{item.updateInterval}"
+        size="25")
+    p 
+      input(type="hidden"
+        name="_method"
+        id="_method"
+        value="put")
+      input(type="submit"
+        name="submit"
+        id="submit"
+        value="Submit")
+      input(type="reset"
+        name="reset"
+        id="reset"
+        value="Reset")

@@ -1,0 +1,14 @@
+tr
+  td(style="text-align:center;") 
+    a(href='/sensornodes/#{item.id}/edit') #{item.id}
+  td(style="text-align:center;") #{item.rfgroup}
+  td(style="text-align:center;") #{item.rfnodeid}
+  td #{item.location}
+  td(style="text-align:center;") #{item.packetversion}
+  td(style="text-align:center;") #{item.pcb}
+  td(style="text-align:center;") #{item.firmware}
+  td(style="text-align:center;") #{item.sensors}
+  td(style="text-align:center;") #{item.updateInterval}
+  td(style="text-align:center;")
+    a(href='/sensornodes/#{item.id}') Delete
+

@@ -1,0 +1,60 @@
+extends ../layout
+
+block content
+  h1 Add SensorNode
+  form(method="POST"
+    action="/sensornodes/create"
+    enctype="application/x-www-form-urlencoded")
+    p rfgroup:
+      input(type="text"
+        name="rfgroup"
+        id="rfgroup"
+        size="25"
+        required)
+    p rfnodeid:
+      input(type="text"
+        name="rfnodeid"
+        id="rfnodeid"
+        size="25"
+        required)
+    p location:
+      input(type="text"
+        name="location"
+        id="location"
+        size="25"
+        required)
+    p packetversion:
+      input(type="text"
+        name="packetversion"
+        id="packetversion"
+        size="25"
+        required)
+    p pcb:
+      input(type="text"
+        name="pcb"
+        id="pcb"
+        size="25")
+    p firmware:
+      input(type="text"
+        name="firmware"
+        id="firmware"
+        size="25")
+    p sensors:
+      input(type="text"
+        name="sensors"
+        id="sensors"
+        size="25")
+    p updateInterval:
+      input(type="text"
+        name="updateInterval"
+        id="updateInterval"
+        size="25")
+    p 
+      input(type="submit"
+        name="submit"
+        id="submit"
+        value="Submit")
+      input(type="reset"
+        name="reset"
+        id="reset"
+        value="Reset")

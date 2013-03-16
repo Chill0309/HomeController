@@ -1,0 +1,9 @@
+tr
+  td(style="text-align:center;") 
+    a(href='/widgets/#{widget.sn}/edit') #{widget.sn}
+  td #{widget.name}
+  td(style="text-align:center;") &pound;#{parseFloat(widget.price).toFixed(2)}
+  td #{widget.desc}
+  td(style="text-align:center;")
+    a(href='/widgets/#{widget.sn}') Delete
+

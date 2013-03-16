@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+  h1 #{item.id}
+  include item
+  form(method="POST"
+    action="/sensornodes/#{item.id}"
+    enctype="application/x-www-urlencoded")
+    input(type="hidden"
+      name="_method"
+      id="_method"
+      value="delete")
+    input(type="submit"
+      name="submit"
+      id="submit"
+      value="Delete")
