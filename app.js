@@ -1,3 +1,6 @@
+// HomeController Node Project
+// Author: Paul Chilton
+
 var express = require('express')
   , routes = require('./routes')
   , map = require('./maproutecontroller')
