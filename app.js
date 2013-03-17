@@ -5,7 +5,9 @@ var express = require('express')
   , async = require('async')
   , http = require('http')
   , path = require('path')
-  , mongoose = require('mongoose');
+  , mongoose = require('mongoose')
+  , timers = require('timers')
+  , socketio = require('socket.io');
 
 var SensorNode = require('./models/sensornode');
 
@@ -55,14 +57,20 @@ prefixes.forEach(function(prefix) {
 
 var server = http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
-});
+    
+    var io = socketio.listen(server);
 
-var io = require('socket.io').listen(server, function() {
-    io.sockets.on('connection', function (socket) {
-        socket.emit('news', { news: 'world' });
+    console.log("Socket.IO Listen");
 
+    io.sockets.on('connection', function (socket) {        
+        timers.setInterval(function() {
+            console.log("TICK");
+            socket.emit('news', { news: 'world' });
+        }, 1000);
+
+        
         socket.on('echo', function (data) {
             socket.emit('news', { news: data.back });
-        });
+        });      
     });    
 });
