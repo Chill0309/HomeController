@@ -14,11 +14,28 @@ var express = require('express')
 
 var SensorNode = require('./models/sensornode');
 
+/*
 mongoose.connect('mongodb://127.0.0.1/WidgetDB');
 
 mongoose.connection.on('open', function () {
     console.log('Connected to Mongoose');
 });
+*/
+
+var SerialPort = require("serialport").SerialPort
+var serialPort = new SerialPort("/dev/ttyAMA0", {
+  baudrate: 9600,
+  parser: require('./node_modules/serialport/serialport.js').parsers.readline("\n")
+});
+
+serialPort.on("open", function () {
+  console.log('open');
+  serialPort.on('data', function(data) {
+    console.log('RX << ' + data);
+  });  
+});
+
+
 
 var app = express();
 
