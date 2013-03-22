@@ -1,14 +1,11 @@
-
-/*
- * GET home page.
- */
+var SensorNode = require('../models/sensornode');
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express Site Title' }, function(err, stuff) {
-    if (!err) {
-      console.log(stuff);
-      res.write(stuff);
-      res.end();
-    }
-  });
+	SensorNode.find({}).sort('rfgroup rfnodeid').lean().execFind(function(err, docs) {
+		if (err) {
+			res.send('Error displaying list of SensorNodes');
+		} else {
+			res.render('index', { title: 'Home Controller', items : docs, nodecount : docs.length } );
+		}
+	});
 };

@@ -2,43 +2,21 @@
 // Author: Paul Chilton
 
 var express = require('express')
-  , routes = require('./routes')
-  , map = require('./maproutecontroller')
-  , user = require('./routes/user')
   , async = require('async')
   , http = require('http')
   , path = require('path')
-  , mongoose = require('mongoose')
   , timers = require('timers')
-  , socketio = require('socket.io');
+  , socketio = require('./classes/socketio.js')
+  , event = require('./classes/event.js')
+  , database = require('./classes/database.js')
+;
 
-var SensorNode = require('./models/sensornode');
+// Start the serial port listening
+var serialport = require('./classes/serial.js')
+serialport.start();
 
-/*
-mongoose.connect('mongodb://127.0.0.1/WidgetDB');
-
-mongoose.connection.on('open', function () {
-    console.log('Connected to Mongoose');
-});
-*/
-
-var SerialPort = require("serialport").SerialPort
-var serialPort = new SerialPort("/dev/ttyAMA0", {
-  baudrate: 9600,
-  parser: require('./node_modules/serialport/serialport.js').parsers.readline("\n")
-});
-
-serialPort.on("open", function () {
-  console.log('open');
-  serialPort.on('data', function(data) {
-    console.log('RX << ' + data);
-  });  
-});
-
-
-
+// Create and configure the express application
 var app = express();
-
 app.configure(function(){
   app.set('port', process.env.PORT || 80);
   app.set('views', __dirname + '/views');
@@ -59,38 +37,25 @@ app.configure(function(){
   }); 
 });
 
+// Set in development mode and add an error handler
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
-app.get('/users', user.list);
-app.get('/test', function(req,res) 
-{
-  console.log(req);
-});
+// Load routes
+require('./routelist.js')(app);
 
-var prefixes = ['widgets', 'sensornodes'];
-prefixes.forEach(function(prefix) {
-    map.mapRoute(app, prefix);
-});
-
+// Start the HTTP server listening
 var server = http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
     
-    var io = socketio.listen(server);
-
-    console.log("Socket.IO Listen");
-
-    io.sockets.on('connection', function (socket) {        
-        timers.setInterval(function() {
-            console.log("TICK");
-            socket.emit('news', { news: 'world' });
-        }, 1000);
-
-        
-        socket.on('echo', function (data) {
-            socket.emit('news', { news: data.back });
-        });      
-    });    
+	// Start Socket.IO
+	socketio.start(server);
+	
+	/*
+	timers.setInterval(function() {
+	console.log("TICK");
+	socket.emit('news', { news: 'world' });
+	}, 1000);
+	*/
 });

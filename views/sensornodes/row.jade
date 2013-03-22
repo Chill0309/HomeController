@@ -1,14 +1,24 @@
 tr
-  td(style="text-align:center;") 
-    a(href='/sensornodes/#{item.id}/edit') #{item.id}
   td(style="text-align:center;") #{item.rfgroup}
   td(style="text-align:center;") #{item.rfnodeid}
   td #{item.location}
   td(style="text-align:center;") #{item.packetversion}
   td(style="text-align:center;") #{item.pcb}
   td(style="text-align:center;") #{item.firmware}
-  td(style="text-align:center;") #{item.sensors}
-  td(style="text-align:center;") #{item.updateInterval}
   td(style="text-align:center;")
-    a(href='/sensornodes/#{item.id}') Delete
-
+    each sensor in item.sensors
+      if sensor
+      div
+        a(href='/sensornodes/#{item._id}/edit/sensors/#{sensor.channelindex}') #{sensor.name}
+        | : 
+        span(id="sensorvalues#{item._id}_#{sensor.channelindex}") #{sensor.lastvalue / sensor.divider} 
+        | #{sensor.units}
+  td(style="text-align:center;") #{item.updateInterval}
+  td(style="text-align:center;") 
+    div(id="lastseen#{item._id}", class="datecell", isotime="#{item.lastseen}") TBC
+    
+  td(style="text-align:center;")
+    a(href='/sensornodes/#{item._id}/edit') Edit
+    |  - 
+    a(href='/sensornodes/#{item._id}') Delete
+  div#debug

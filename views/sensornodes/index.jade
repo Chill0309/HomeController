@@ -1,18 +1,21 @@
 extends ../layout
 
+block javascriptincludes
+  script(type="text/javascript", src="/js/sensorlist.js")
+  
 block content
   table(width='100%')
     if items.length
       tr
-        th(width='70px') ID
-        th(width='100px') RF Group
-        th(width='100px') RF Node ID
+        th(width='70px') RF Group
+        th(width='70px') RF Node ID
         th Location
-        th(width='100px') Packet Version
+        th(width='70px') Packet Version
         th PCB
         th Firmware
         th Sensors
-        th(width='100px') Update Interval
+        th(width='70px') Update Interval
+        th(width='140px') Last Seen
         th(width='100px') Delete
     each item in items
         if item

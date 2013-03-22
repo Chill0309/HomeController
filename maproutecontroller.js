@@ -22,4 +22,12 @@ exports.mapRoute = function(app, prefix) {
 
 	// Destroy
 	app.del(prefix + '/:sn', prefixObj.destroy);
+
+
+	// Edit
+	app.get(prefix + '/:sn/edit/:propertyName/:propertySn', prefixObj.editProperty);
+
+	// Update
+	app.put(prefix + '/:sn/:propertyName/:propertySn', prefixObj.updateProperty);
+
 };

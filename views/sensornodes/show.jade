@@ -1,10 +1,10 @@
 extends ../layout
 
 block content
-  h1 #{item.id}
+  h1 #{item._id}
   include item
   form(method="POST"
-    action="/sensornodes/#{item.id}"
+    action="/sensornodes/#{item._id}"
     enctype="application/x-www-urlencoded")
     input(type="hidden"
       name="_method"

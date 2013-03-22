@@ -18,8 +18,7 @@ html
     script(type="text/javascript", src="/js/login.js")
 
     script(type="text/javascript", src="/socket.io/socket.io.js")
-    script(type="text/javascript", src="/js/newsfeed.js")
-
+    block javascriptincludes
 
   body
     div#wrapper
@@ -57,8 +56,6 @@ html
             ul
               li
                 a(href='/', class='first') Home
-              li
-                a(href='/widgets') Widgets
               li
                 a(href='/sensornodes') Nodes
         div#header2
