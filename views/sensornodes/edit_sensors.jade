@@ -1,0 +1,44 @@
+extends ../layout
+
+block content
+  h1 Edit #{item.rfnodeid}_#{property.channelindex}
+  form(method="POST"
+    action="/sensornodes/#{item._id}/sensors/#{property.channelindex}"
+    enctype="application/x-www-form-urlencoded")
+    
+    p channelindex:
+      | #{property.channelindex}
+    p name:
+      input(type="text"
+        name="name"
+        id="name"
+        value="#{property.name}"
+        size="25"
+        required)
+    p units:
+      input(type="text"
+        name="units"
+        id="units"
+        value="#{property.units}"
+        size="25"
+        required)
+    p divider:
+      input(type="text"
+        name="divider"
+        id="divider"
+        value="#{property.divider}"
+        size="25"
+        required)
+    p 
+      input(type="hidden"
+        name="_method"
+        id="_method"
+        value="put")
+      input(type="submit"
+        name="submit"
+        id="submit"
+        value="Submit")
+      input(type="reset"
+        name="reset"
+        id="reset"
+        value="Reset")
