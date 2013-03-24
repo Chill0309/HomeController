@@ -1,0 +1,156 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@1.1.69
+3 info using node@v0.8.16
+4 verbose read json /sites/HomeController/package.json
+5 verbose readDependencies using package.json deps
+6 verbose install where, deps [ '/sites/HomeController', [ 'express', 'jade' ] ]
+7 verbose from cache /sites/HomeController/package.json
+8 info preinstall application-name@0.0.1
+9 verbose read json /sites/HomeController/node_modules/redis/package.json
+10 verbose read json /sites/HomeController/node_modules/ejs/package.json
+11 verbose read json /sites/HomeController/node_modules/express/package.json
+12 verbose read json /sites/HomeController/node_modules/mongodb/package.json
+13 verbose read json /sites/HomeController/node_modules/socket.io/package.json
+14 verbose read json /sites/HomeController/node_modules/serialport/package.json
+15 verbose read json /sites/HomeController/node_modules/node-gyp/package.json
+16 verbose read json /sites/HomeController/node_modules/async/package.json
+17 verbose read json /sites/HomeController/node_modules/mongoose/package.json
+18 verbose read json /sites/HomeController/node_modules/mongoose-redis-cache/package.json
+19 verbose read json /sites/HomeController/node_modules/node-inspector/package.json
+20 verbose read json /sites/HomeController/node_modules/jade/package.json
+21 verbose read json /sites/HomeController/node_modules/hiredis/package.json
+22 warn package.json hiredis@0.1.14 No README.md file found!
+23 verbose from cache /sites/HomeController/package.json
+24 verbose readDependencies using package.json deps
+25 verbose from cache /sites/HomeController/node_modules/redis/package.json
+26 verbose from cache /sites/HomeController/node_modules/ejs/package.json
+27 verbose from cache /sites/HomeController/node_modules/express/package.json
+28 verbose from cache /sites/HomeController/node_modules/mongodb/package.json
+29 verbose read json /sites/HomeController/node_modules/.bin/package.json
+30 verbose from cache /sites/HomeController/node_modules/socket.io/package.json
+31 verbose from cache /sites/HomeController/node_modules/serialport/package.json
+32 verbose from cache /sites/HomeController/node_modules/node-gyp/package.json
+33 verbose from cache /sites/HomeController/node_modules/async/package.json
+34 verbose from cache /sites/HomeController/node_modules/mongoose/package.json
+35 verbose from cache /sites/HomeController/node_modules/mongoose-redis-cache/package.json
+36 verbose from cache /sites/HomeController/node_modules/node-inspector/package.json
+37 verbose from cache /sites/HomeController/node_modules/jade/package.json
+38 verbose from cache /sites/HomeController/node_modules/hiredis/package.json
+39 verbose already installed skipping express@3.1.0 /sites/HomeController
+40 verbose already installed skipping jade@* /sites/HomeController
+41 silly resolved []
+42 info build /sites/HomeController
+43 verbose from cache /sites/HomeController/package.json
+44 verbose linkStuff [ false, false, false, '/sites' ]
+45 info linkStuff application-name@0.0.1
+46 verbose linkBins application-name@0.0.1
+47 verbose linkMans application-name@0.0.1
+48 verbose rebuildBundles application-name@0.0.1
+49 verbose rebuildBundles [ 'redis',
+49 verbose rebuildBundles   'ejs',
+49 verbose rebuildBundles   'express',
+49 verbose rebuildBundles   'mongodb',
+49 verbose rebuildBundles   '.bin',
+49 verbose rebuildBundles   'socket.io',
+49 verbose rebuildBundles   'serialport',
+49 verbose rebuildBundles   'node-gyp',
+49 verbose rebuildBundles   'async',
+49 verbose rebuildBundles   'mongoose',
+49 verbose rebuildBundles   'mongoose-redis-cache',
+49 verbose rebuildBundles   'node-inspector',
+49 verbose rebuildBundles   'jade',
+49 verbose rebuildBundles   'hiredis' ]
+50 verbose rebuild bundle /sites/HomeController/node_modules/redis
+51 info build /sites/HomeController/node_modules/redis
+52 verbose from cache /sites/HomeController/node_modules/redis/package.json
+53 info preinstall redis@0.8.2
+54 verbose linkStuff [ false, false, false, '/sites/HomeController/node_modules' ]
+55 info linkStuff redis@0.8.2
+56 verbose linkBins redis@0.8.2
+57 verbose linkMans redis@0.8.2
+58 verbose rebuildBundles redis@0.8.2
+59 info install redis@0.8.2
+60 info postinstall redis@0.8.2
+61 verbose rebuild bundle /sites/HomeController/node_modules/ejs
+62 info build /sites/HomeController/node_modules/ejs
+63 verbose from cache /sites/HomeController/node_modules/ejs/package.json
+64 info preinstall ejs@0.8.3
+65 verbose linkStuff [ false, false, false, '/sites/HomeController/node_modules' ]
+66 info linkStuff ejs@0.8.3
+67 verbose linkBins ejs@0.8.3
+68 verbose linkMans ejs@0.8.3
+69 verbose rebuildBundles ejs@0.8.3
+70 info install ejs@0.8.3
+71 info postinstall ejs@0.8.3
+72 verbose rebuild bundle /sites/HomeController/node_modules/mongodb
+73 info build /sites/HomeController/node_modules/mongodb
+74 verbose from cache /sites/HomeController/node_modules/mongodb/package.json
+75 info preinstall mongodb@1.2.8
+76 verbose linkStuff [ false, false, false, '/sites/HomeController/node_modules' ]
+77 info linkStuff mongodb@1.2.8
+78 verbose linkBins mongodb@1.2.8
+79 verbose linkMans mongodb@1.2.8
+80 verbose rebuildBundles mongodb@1.2.8
+81 verbose rebuildBundles [ 'bson' ]
+82 info install mongodb@1.2.8
+83 info postinstall mongodb@1.2.8
+84 verbose rebuild bundle /sites/HomeController/node_modules/socket.io
+85 info build /sites/HomeController/node_modules/socket.io
+86 verbose from cache /sites/HomeController/node_modules/socket.io/package.json
+87 info preinstall socket.io@0.9.13
+88 verbose linkStuff [ false, false, false, '/sites/HomeController/node_modules' ]
+89 info linkStuff socket.io@0.9.13
+90 verbose linkBins socket.io@0.9.13
+91 verbose linkMans socket.io@0.9.13
+92 verbose rebuildBundles socket.io@0.9.13
+93 verbose rebuildBundles [ 'redis', 'base64id', 'socket.io-client', 'policyfile' ]
+94 info install socket.io@0.9.13
+95 info postinstall socket.io@0.9.13
+96 verbose rebuild bundle /sites/HomeController/node_modules/serialport
+97 info build /sites/HomeController/node_modules/serialport
+98 verbose from cache /sites/HomeController/node_modules/serialport/package.json
+99 info preinstall serialport@1.0.8
+100 verbose linkStuff [ false, false, false, '/sites/HomeController/node_modules' ]
+101 info linkStuff serialport@1.0.8
+102 verbose linkBins serialport@1.0.8
+103 verbose link bins [ { serialportlist: './bin/serialportList.js',
+103 verbose link bins     serialportterm: './bin/serialportTerminal.js' },
+103 verbose link bins   '/sites/HomeController/node_modules/.bin',
+103 verbose link bins   false ]
+104 verbose linkMans serialport@1.0.8
+105 verbose rebuildBundles serialport@1.0.8
+106 verbose rebuildBundles [ '.bin', 'bindings', 'node-gyp', 'async', 'sf', 'optimist' ]
+107 info install serialport@1.0.8
+108 verbose unsafe-perm in lifecycle false
+109 verbose set uid from=0 to=1000
+110 silly exec sh "-c" "node-gyp rebuild"
+111 silly sh,-c,node-gyp rebuild,/sites/HomeController/node_modules/serialport spawning
+112 info postinstall serialport@1.0.8
+113 verbose rebuild bundle /sites/HomeController/node_modules/node-gyp
+114 info build /sites/HomeController/node_modules/node-gyp
+115 verbose from cache /sites/HomeController/node_modules/node-gyp/package.json
+116 info preinstall node-gyp@0.9.1
+117 verbose linkStuff [ false, false, false, '/sites/HomeController/node_modules' ]
+118 info linkStuff node-gyp@0.9.1
+119 warn prefer global node-gyp@0.9.1 should be installed with -g
+120 verbose linkBins node-gyp@0.9.1
+121 verbose link bins [ { 'node-gyp': './bin/node-gyp.js' },
+121 verbose link bins   '/sites/HomeController/node_modules/.bin',
+121 verbose link bins   false ]
+122 verbose linkMans node-gyp@0.9.1
+123 verbose rebuildBundles node-gyp@0.9.1
+124 error Error: ENOENT, chmod '/sites/HomeController/node_modules/node-gyp/bin/node-gyp.js'
+125 error If you need help, you may report this log at:
+125 error     <http://github.com/isaacs/npm/issues>
+125 error or email it to:
+125 error     <npm-@googlegroups.com>
+126 error System Linux 3.6.11+
+127 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install"
+128 error cwd /sites/HomeController
+129 error node -v v0.8.16
+130 error npm -v 1.1.69
+131 error path /sites/HomeController/node_modules/node-gyp/bin/node-gyp.js
+132 error code ENOENT
+133 error errno 34
+134 verbose exit [ 34, true ]

@@ -1,0 +1,18 @@
+extends ../layout
+
+block javascriptincludes
+  script(type="text/javascript", src="/js/sensorlist.js")
+  
+block content
+  table(width='100%')
+    if items.length
+      tr
+        th(width='150px') Group
+        th(width='150px') Feed Name
+        th(width='150px') Last Seen
+
+    each item in items
+        if item
+        include row
+
+  p Feeds: #{itemcount}

@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+  h1 #{item.name}
+  h3 Most Recent Value:
+  p #{values[0].value} #{item.units}
+  h3 Values:
+  ul
+    each value in values
+      if value
+        li #{value.timestamp} = #{value.value} #{item.units}
