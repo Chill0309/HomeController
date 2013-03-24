@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var mongooseRedisCache = require("mongoose-redis-cache");
 var redis = require('redis');
 
 // Connect to mongodb
@@ -11,6 +10,3 @@ mongoose.connection.on('open', function () {
 // Connect to redis
 var redisClient = redis.createClient();
 redisClient.select(1);
-
-// Set the model to be cachable in redis
-mongooseRedisCache(mongoose);

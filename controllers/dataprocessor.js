@@ -1,6 +1,8 @@
 var event = require('../classes/event.js');
-var SensorNode = require('../models/sensornode');
-var NodeChannel = require('../models/nodechannel');
+var SensorNode = require('../models/sensornode.js');
+var NodeChannel = require('../models/nodechannel.js');
+var ChannelFeed = require('../models/channelfeed.js');
+var FeedValue = require('../models/feedvalue.js');
 
 function SaveSensorNode(item) {
 	var obj = new SensorNode(item);
@@ -23,6 +25,17 @@ function UpdateSensorNode(item, sensors) {
 			console.log("Error updating node: " + err);
 		} else {
 			console.log("Node updated: " + item.rfnodeid);
+		}
+	});
+};
+
+function SaveFeedValue(item) {
+	var obj = new FeedValue(item);
+	obj.save(function (err, data) {
+		if (err) {
+			console.log("Error saving feed value: " + err);
+		} else {
+			event.emit('tobrowser', { message: 'feedvalueadded', item: item });
 		}
 	});
 };
@@ -69,29 +82,58 @@ module.exports = {
 					// Save the new node object
 					console.log("Saving node...");
 					SaveSensorNode(newNode);
-				} else {
+				} 
+				else 
+				{
 					// TODO: Deal with new sensor values added once the node exists
 					
 					// Update sensor values
 					var i = 0;
-					data.values.forEach(function(value) {
+					data.values.forEach(function(value) 
+					{
 						nodes[0].sensors[i++].lastvalue = value;
 					});
 					
 					// Save updates to node
 					UpdateSensorNode(nodes[0], nodes[0].sensors);
-				}
-				
-				// Lookup all measurement values for this node
-				
-				// Loop through each measurement value
-				
-					// If the measurement value does not exist
 					
-						// Create the measurement value
+					// Update the FeedValue for the specified feed for each channel
+					i = 0;
+					data.values.forEach(function(value) 
+					{
+						var feedname = nodes[0].sensors[i].feedname;
+						var divider = nodes[0].sensors[i].divider;
 						
-					// Add measurement value data
-					
+						// If a feed has been specified for this channel
+						if (feedname != null && feedname != "") 
+						{
+							// Get the feed
+							ChannelFeed.find({}).where("name", feedname).execFind(function(err, feeds) 
+							{
+								if (err)
+								{
+									console.log("Error looking up feed " + feedname);
+								}
+								else
+								{
+									var feed = feeds[0];
+									
+									// Create a new feed value
+									var feedvalue = {
+										feedid : feed._id,
+										value : (value / divider),
+										timestamp : new Date()
+									};
+									
+									// Save the feed value
+									SaveFeedValue(feedvalue);
+								}							
+							});
+							
+							i++;
+						}
+					});
+				}
 			}
 		});
 	}

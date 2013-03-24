@@ -1,5 +1,5 @@
-var async = require('async')
-var SensorNode = require('../models/sensornode');
+var SensorNode = require('../models/sensornode.js');
+var ChannelFeed = require('../models/channelfeed.js');
 
 // Index listing
 exports.index = function(req, res) {
@@ -139,6 +139,26 @@ exports.updateProperty = function(req, res) {
     	if (err || item == null) {
      		res.send('There is no SensorNode with a id of ' + id);
     	} else {
+    		// Determine if the feed specified already exists
+    		ChannelFeed.findOne({name : req.body.feedname}, function(err, item) {
+		    	if (err || item == null) {
+		     		// Create new feed
+					var newFeed = {
+						name: req.body.feedname,
+						group: ''
+					};
+				
+					var obj = new ChannelFeed(newFeed);
+					obj.save(function (err, data) {
+						if (err) {
+							console.log("Failed to add new feed: " + err);
+						} else {
+							console.log("New feed created: " + data);
+						}
+					});
+		    	}
+		    });
+	    	
     		var updatedProperty = item[propertyName];
     		
     		// TODO: GET SPECIFIC PROPERTIES FROM BODY COLLECTION SO WE DONT NEED TO MANUALLY SPECIFY THEM!!
@@ -146,6 +166,7 @@ exports.updateProperty = function(req, res) {
     		updatedProperty[propertySn].name = req.body.name;
 			updatedProperty[propertySn].units = req.body.units;
 			updatedProperty[propertySn].divider = parseInt(req.body.divider);
+			updatedProperty[propertySn].feedname = req.body.feedname;
 			
 			console.log(updatedProperty);
 			console.log(updatedProperty[propertySn]);
