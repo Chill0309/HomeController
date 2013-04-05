@@ -1,4 +1,4 @@
-var socket = io.connect('http://10.0.0.104/');
+var socket = io.connect('http://10.0.0.31/');
 socket.on('serialdata', function (data) {
     //var html = '<p>' + data.message + '</p>';
     //document.getElementById('output').innerHTML += html;

@@ -4,7 +4,9 @@ var mongoose = require('mongoose');
 var ChannelFeed = new mongoose.Schema({
 	name : String,
 	group : String,
-	units : String
+	units : String,
+	lastvalue : Number,
+	lastupdated : Date
 });
 
 // Register the model name

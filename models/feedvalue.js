@@ -4,7 +4,8 @@ var mongoose = require('mongoose');
 var FeedValue = new mongoose.Schema({
 	feedid : String,
 	value : Number,
-	timestamp :  { type: Date, default: Date.now }
+	timestampA :  { type: Date, default: Date.now },
+	timestampB :  { type: Date, default: Date.now }
 });
 
 // Register the model name

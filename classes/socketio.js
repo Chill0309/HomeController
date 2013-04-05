@@ -6,13 +6,16 @@ module.exports = {
 		// Start Socket.IO listening
 		var io = socketio.listen(server);
 		console.log("Socket.IO Listening...");
-
+		
+		// Lower logging level
+		io.set('log level', 1);
+		
 		// On a new connection event
 		io.sockets.on('connection', function (socket) {
 			// On a serial data packet received event
 			event.on('serialdatarx', function(data) {
 				// Send the data to the client
-				console.log("Received serial packet from node " + data.nodeId + ", socket client " + socket.id);
+				// console.log("Received serial packet from node " + data.nodeId + ", socket client " + socket.id);
 				socket.emit('serialdata', data);
 			});
 			

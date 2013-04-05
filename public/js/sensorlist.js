@@ -26,7 +26,7 @@ function GetTimeAgo(isoTimeString)
 	return value;
 }
 
-var socket = io.connect('http://10.0.0.104/');
+var socket = io.connect('http://10.0.0.31/');
 
 socket.on('tobrowser', function (data) {
 	switch (data.message)
@@ -36,7 +36,6 @@ socket.on('tobrowser', function (data) {
 			break;
 		case 'sensornodeupdated':
 			var date = new Date(data.item.lastseen);
-			
 			var element = "#lastseen" + data.item._id;
 			$(element).attr('isotime', date.toISOString());
 			$(element).html(GetTimeAgo(date));
@@ -47,6 +46,16 @@ socket.on('tobrowser', function (data) {
 				$(element).html(value);
 			});
 			
+			break;
+		case 'channelfeedupdated':
+			var date = new Date(data.item.lastupdated);
+			var element = "#lastupdated" + data.item._id;
+			$(element).attr('isotime', date.toISOString());
+			$(element).html(GetTimeAgo(date));
+			
+			element = "#feedvalues" + data.item._id;
+			var value = data.item.lastvalue + ' ' + data.item.units;
+			$(element).html(value);
 			break;
 	}
 });
@@ -61,5 +70,16 @@ function updateTimes()
 }
 
 $(document).ready(function() {
+	// Update the last updated times
 	updateTimes();
+
+	// Hide all groups by defaut
+	$(".feedgroupcontent").hide();
+
+	// Setup a click handler for the group headers
+	$(".feedgroupheader").click(function() {
+		var group = $(this).attr('group');
+		var element = '#feedgroup_' + group;
+		$(element).slideToggle();
+	});
 });

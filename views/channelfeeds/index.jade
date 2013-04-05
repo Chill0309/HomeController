@@ -4,15 +4,26 @@ block javascriptincludes
   script(type="text/javascript", src="/js/sensorlist.js")
   
 block content
-  table(width='100%')
-    if items.length
-      tr
-        th(width='150px') Group
-        th(width='150px') Feed Name
-        th(width='150px') Last Seen
+  each group in groups
+    div.feedgroup
+      div(class='feedgroupheader', group='#{group}')
+        if group == ''
+          p + Unassigned
+        else
+          p + #{group}
+      div(class='feedgroupcontent', id='feedgroup_#{group}')
+        table
+          thead        
+            if items.length
+              tr
+                th() Feed Name
+                th(width='150px') Last Updated
+                th(width='150px') Last Value
 
-    each item in items
-        if item
-        include row
+          tbody
+            each item in items
+              if item
+                if item.group == group
+                  include row
 
   p Feeds: #{itemcount}
