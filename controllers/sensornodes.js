@@ -1,5 +1,6 @@
-var SensorNode = require('../models/sensornode.js');
-var ChannelFeed = require('../models/channelfeed.js');
+var SensorNode = require('../models/node.js');
+var ChannelFeed = require('../models/feed.js');
+var Database = require('../classes/database.js');
 
 // Index listing
 exports.index = function(req, res) {
@@ -133,13 +134,13 @@ exports.editProperty = function(req, res) {
 exports.updateProperty = function(req, res) {
 	var id = req.params.sn;
 	var propertyName = req.params.propertyName;
-  	var propertySn = parseInt(req.params.propertySn);
-
+  	var propertySn = parseInt(req.params.propertySn);				
+	
   	SensorNode.findOne({_id : id}, function(err, item) {
     	if (err || item == null) {
      		res.send('There is no SensorNode with a id of ' + id);
     	} else {
-    		// Determine if the feed specified already exists
+			// Determine if the feed specified already exists
     		ChannelFeed.findOne({name : req.body.feedname}, function(err, item) {
 		    	if (err || item == null) {
 		     		// Create new feed
@@ -186,6 +187,18 @@ exports.updateProperty = function(req, res) {
 					});
 				}
 			});	
+			
+			// Update property
+			item[propertyName] = updatedProperty;
+			
+			if (Database.SensorNodeCollection['Node' + item.rfnodeid]) {
+				console.log("INFORMATION: Node " + item.rfnodeid + " exists in SensorNodeCollection");
+			} else {
+				console.log("INFORMATION: Adding Node " + item.rfnodeid + " to SensorNodeCollection");
+			}
+
+			// Set item in local memory store
+			Database.SensorNodeCollection['Node' + item.rfnodeid] = item;
     	}
   	});  	
 };

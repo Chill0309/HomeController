@@ -1,8 +1,8 @@
 var event = require('../classes/event.js');
 var async = require('async');
-var SensorNode = require('../models/sensornode.js');
-var NodeChannel = require('../models/nodechannel.js');
-var ChannelFeed = require('../models/channelfeed.js');
+var SensorNode = require('../models/node.js');
+var NodeChannel = require('../models/channel.js');
+var ChannelFeed = require('../models/feed.js');
 var FeedValue = require('../models/feedvalue.js');
 var Database = require('../classes/database.js');
 
@@ -12,10 +12,10 @@ function GetNode(data, callback) {
 	async.waterfall([
 		function(callback) {
 			if (Database.SensorNodeCollection['Node' + data.nodeId]) {
-				console.log("INFORMATION: Node " + data.nodeId + " exists in SensorNodeCollection");
+				//console.log("INFORMATION: Node " + data.nodeId + " exists in SensorNodeCollection");
 				callback(null, Database.SensorNodeCollection['Node' + data.nodeId]);
 			} else {
-				console.log("INFORMATION: Adding Node " + data.nodeId + " to SensorNodeCollection");
+				//console.log("INFORMATION: Adding Node " + data.nodeId + " to SensorNodeCollection");
 				SensorNode.find({}).where("rfnodeid", data.nodeId).lean().execFind(function(err, nodes) {
 					if (err) {
 						callback('Error getting list of SensorNodes: ' + err, null);
@@ -88,7 +88,7 @@ function GetNode(data, callback) {
 			});
 			
 			// Save updates to node
-			//nodes[0].lastseen = new Date();
+			node.lastseen = new Date();
 			
 			SensorNode.update({_id : node._id}, { lastseen : new Date(), sensors : node.sensors }, function(err) {
 				if (err) {
@@ -170,7 +170,7 @@ function UpdateFeedValues(feedname, value, divider, units, node, callback) {
 		}
 	], function(err, result) {
 		if (err) throw err;
-		console.log('UpdateFeedValues: ' + result);
+		//console.log('UpdateFeedValues: ' + result);
 	});
 }
 
@@ -204,7 +204,7 @@ module.exports = {
 			}
 		], function(err, result) {
 			if (err) throw err;
-			console.log('StorePacket: ' + result);
+			//console.log('StorePacket: ' + result);
 		});
 	}
 };

@@ -1,4 +1,4 @@
-var SensorNode = require('../models/sensornode');
+var SensorNode = require('../models/node.js');
 
 exports.index = function(req, res){
 	SensorNode.find({}).sort('rfgroup rfnodeid').lean().execFind(function(err, docs) {

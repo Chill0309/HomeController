@@ -1,5 +1,5 @@
 var routes = require('./routes'); // Routes directory
-var map = require('./maproutecontroller'); // Maproutecontoller template
+var map = require('./maproutecontroller.js'); // Maproutecontoller template
 var pages = require('./routes/pages.js'); // Routes directory
 
 module.exports = function(app) {
@@ -8,12 +8,12 @@ module.exports = function(app) {
 	app.get('/', routes.index); // Example accessing a file within a directory of routes
 	
 	// Define models that will be loaded using the maproutecontroller template
-	var prefixes = ['sensornodes'];
+	var prefixes = ['sensornodes', 'feeds'];
 	prefixes.forEach(function(prefix) {
 		map.mapRoute(app, prefix);
 	});
 	
 	// Channel Feeds
-	app.get('/feeds', pages.feedlist);
-	app.get('/feeds/:id', pages.showfeed);
+	//app.get('/feeds', pages.feedlist);
+	//app.get('/feeds/:id', pages.showfeed);
 };

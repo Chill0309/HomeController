@@ -1,4 +1,4 @@
-var feeds = require('../controllers/channelfeeds.js');
+var feeds = require('../controllers/feeds.js');
 
 exports.feedlist = function(req, res){
 	feeds.index(req, res);
