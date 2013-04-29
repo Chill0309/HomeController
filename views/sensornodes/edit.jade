@@ -1,9 +1,9 @@
 extends ../layout
 
 block content
-  h1 Edit #{item._id}
+  h1 Edit #{item.id}
   form(method="POST"
-    action="/sensornodes/#{item._id}"
+    action="/sensornodes/#{item.id}"
     enctype="application/x-www-form-urlencoded")
     p rfgroup:
       input(type="text"

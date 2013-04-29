@@ -1,3 +1,4 @@
+/*
 var mongoose = require('mongoose');
 
 // Define the model
@@ -12,3 +13,10 @@ var ChannelFeed = new mongoose.Schema({
 // Register the model name
 module.exports = mongoose.model('ChannelFeed', ChannelFeed);
 
+*/
+
+var ModelBase = require('./model.js');
+
+module.exports = ModelBase.extend({
+    tableName: "feeds",
+});

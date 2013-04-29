@@ -1,11 +1,34 @@
 extends ../layout
 
+block javascriptincludes
+  link(rel='stylesheet', href='/js/nvd3/src/nv.d3.css')
+  script(type="text/javascript", src="/js/nvd3/lib/d3.v2.js")
+  script(type="text/javascript", src="/js/nvd3/nv.d3.js")
+  script(type="text/javascript", src="/js/nvd3/src/tooltip.js")
+  script(type="text/javascript", src="/js/nvd3/src/utils.js")
+  script(type="text/javascript", src="/js/nvd3/src/models/legend.js")
+  script(type="text/javascript", src="/js/nvd3/src/models/axis.js")
+  script(type="text/javascript", src="/js/nvd3/src/models/scatter.js")
+  script(type="text/javascript", src="/js/nvd3/src/models/line.js")
+  script(type="text/javascript", src="/js/nvd3/src/models/lineWithFocusChart.js")
+  script(type="text/javascript", src="/js/chartdata.js")
+
 block content
   h1 #{item.name}
   h3 Most Recent Value:
   p #{values[0].value} #{item.units}
+
+  if item.units == "W"
+    h3 Average Daily Usage:
+    p #{averageValue} W
+    p £#{energyCost} / month
+
+  div(id="chart")
+    svg(style="width: 800px; height: 500px;")
+  
   h3 Values:
   ul
     each value in values
       if value
-        li #{value.timestampA} to #{value.timestampB} = #{value.value} #{item.units}
+        li 
+          | #{value.timestampA} to #{value.timestampB} (#{value.readingcount} values) = #{value.value} #{item.units}

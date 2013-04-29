@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+/*var mongoose = require('mongoose');
 
 // Define the model
 var FeedValue = new mongoose.Schema({
@@ -10,3 +10,10 @@ var FeedValue = new mongoose.Schema({
 
 // Register the model name
 module.exports = mongoose.model('FeedValue', FeedValue);
+*/
+
+var ModelBase = require('./model.js');
+
+module.exports = ModelBase.extend({
+    tableName: "feedvalues",
+});

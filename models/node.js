@@ -1,3 +1,4 @@
+/*
 var mongoose = require('mongoose');
 var NodeChannel = require('./channel.js');
 
@@ -16,3 +17,10 @@ var SensorNode = new mongoose.Schema({
 
 // Register the model name
 module.exports = mongoose.model('SensorNode', SensorNode);
+*/
+
+var ModelBase = require('./model.js');
+
+module.exports = ModelBase.extend({
+    tableName: "nodes",
+});

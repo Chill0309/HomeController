@@ -3,7 +3,7 @@ extends ../layout
 block content
   h1 Edit #{item.rfnodeid}_#{property.channelindex}
   form(method="POST"
-    action="/sensornodes/#{item._id}/sensors/#{property.channelindex}"
+    action="/sensornodes/#{item.id}/sensors/#{property.channelindex}"
     enctype="application/x-www-form-urlencoded")
     
     p channelindex:

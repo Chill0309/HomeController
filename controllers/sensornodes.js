@@ -1,16 +1,23 @@
 var SensorNode = require('../models/node.js');
+var NodeChannel = require('../models/channel.js');
 var ChannelFeed = require('../models/feed.js');
+var FeedValue = require('../models/feedvalue.js');
 var Database = require('../classes/database.js');
+
+var nodes = new SensorNode();
+var channels = new NodeChannel();
+var feeds = new ChannelFeed();
+var feedvalues = new FeedValue();
 
 // Index listing
 exports.index = function(req, res) {
-  SensorNode.find({}).sort('rfgroup rfnodeid').lean().execFind(function(err, docs) {
-    if (err) {
-      res.send('Error displaying list of SensorNodes');
-    } else {
-      res.render('sensornodes/index', { title: 'SensorNodes', items : docs, nodecount : docs.length });
-    }
-  });
+	nodes.find('all', {where : "1=1 ORDER BY rfnodeid"}, function(err, rows, fields) {
+		if (err) {
+			res.send('Error displaying list of SensorNodes');
+		} else {
+			res.render('sensornodes/index', { title: 'SensorNodes', items : rows, nodecount : rows.length });
+		}
+	});
 };
 
 // Display new form
@@ -21,7 +28,6 @@ exports.displaynew = function(req, res) {
 // Add a SensorNode
 exports.create = function(req, res) {
 	var item = {
-		rfgroup: parseInt(req.body.rfgroup),
 		rfnodeid: parseInt(req.body.rfnodeid),
 		location: req.body.location,
 		packetversion: parseInt(req.body.packetversion),

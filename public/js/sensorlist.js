@@ -36,12 +36,12 @@ socket.on('tobrowser', function (data) {
 			break;
 		case 'sensornodeupdated':
 			var date = new Date(data.item.lastseen);
-			var element = "#lastseen" + data.item._id;
+			var element = "#lastseen" + data.item.id;
 			$(element).attr('isotime', date.toISOString());
 			$(element).html(GetTimeAgo(date));
 			
 			data.item.sensors.forEach(function(sensor) {
-				element = "#sensorvalues" + data.item._id + "_" + sensor.channelindex;
+				element = "#sensorvalues" + data.item.id + "_" + sensor.channelindex;
 				var value = sensor.lastvalue / sensor.divider;
 				$(element).html(value);
 			});
@@ -49,11 +49,11 @@ socket.on('tobrowser', function (data) {
 			break;
 		case 'channelfeedupdated':
 			var date = new Date(data.item.lastupdated);
-			var element = "#lastupdated" + data.item._id;
+			var element = "#lastupdated" + data.item.id;
 			$(element).attr('isotime', date.toISOString());
 			$(element).html(GetTimeAgo(date));
 			
-			element = "#feedvalues" + data.item._id;
+			element = "#feedvalues" + data.item.id;
 			var value = data.item.lastvalue + ' ' + data.item.units;
 			$(element).html(value);
 			break;
