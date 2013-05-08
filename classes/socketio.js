@@ -1,5 +1,6 @@
 var socketio = require('socket.io');
 var event = require('./event.js');
+var Database = require('./database.js');
 
 module.exports = {
 	start : function(server) {
@@ -28,6 +29,13 @@ module.exports = {
 			socket.on('echo', function (data) {
 				// Send the data back to the client
 				socket.emit('echoreply', { packet: data.back });
+			});
+			
+			// When the client requests data for a graph
+			socket.on('graphdatarequest', function(data) {
+				console.log("Graph Request:");
+				console.log(data);
+				Database.GetGraphData(data, socket);
 			});
 		});
 	}

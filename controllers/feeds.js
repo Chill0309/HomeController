@@ -56,33 +56,16 @@ exports.show = function(req, res) {
 	    if (err) {
 			res.send('Error finding ChanelFeed with id of ' + id);
 	    } else {
+			// Get the feed
 			var feed = rows[0];
 		
-	    	// Find feed values
-	    	console.log("Looking up feed values"); 
-			var searchTime = Date.now() - (1000 * 24 * 60 * 60);
-
-	    	feedvalues.find('all', {where: "feedid=" + id + " AND timestampA >= '" + Database.ConvertDateToMySQL(new Date(searchTime)) + "' ORDER BY id DESC"}, function(err, rows, fields) {
-			//{feedid : id}).sort({$natural:-1}).where("timestampA").gte(searchTime).execFind(function(err, values) {
+	    	// Calculate the average daily value for the specified feed
+			feedvalues.query("SELECT FLOOR(SUM(VALUE*readingcount)/SUM(readingcount)) AS average FROM feedvalues WHERE feedid=" + id + " AND (YEAR(timestampA) = YEAR(NOW())) AND (DAYOFYEAR(timestampA) = DAYOFYEAR(NOW()));", function(err, rows, fields) {
 	    		if (err) { 
 	    			res.send('Error finding FeedValues for feed ' + id);
 	    		}  else {
-					var values = rows;
-	    			console.log("Got data: " + values.length + " rows");
-					
-					var valueSum = 0;
-					var valueCount = 0;
-					var averageValue = 0;
-					for (var i in values)
-					{
-						var item = values[i];
-						valueCount += item.readingcount;
-						valueSum += (item.value * item.readingcount);
-					}
-					if (valueCount > 0)
-					{
-						averageValue = valueSum / valueCount;
-					}
+					var feedInformation = rows[0];
+	    			var averageValue = feedInformation.average;
 					
 					// Work out the cost per month based on the average daily consumption
 					// 720 hours in a month
@@ -93,9 +76,7 @@ exports.show = function(req, res) {
 					energyCost = Number(energyCost).toFixed(2);
 					averageValue = Number(averageValue).toFixed(2);
 					
-					//console.log(feed);
-	    			//console.log(values);
-	    			res.render('channelfeeds/show', { title: 'Feed ' + id, id : id, item : feed, values : values, averageValue : averageValue, energyCost : energyCost });
+					res.render('channelfeeds/show', { title: 'Feed ' + id, id : id, item : feed, averageValue : averageValue, energyCost : energyCost });
 	    		}
 	    	});	    
 	    }

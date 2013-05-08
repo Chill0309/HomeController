@@ -14,21 +14,23 @@ block javascriptincludes
   script(type="text/javascript", src="/js/chartdata.js")
 
 block content
+  div(id="feedinfo", feedid="#{id}")
   h1 #{item.name}
   h3 Most Recent Value:
-  p #{values[0].value} #{item.units}
+  div
+    p(id="lastvalue")
+      | #{item.lastvalue} 
+      | #{item.units}
+    p(id="lastupdated", class="datecell", timeoffset="0", isotime="#{new Date()}") 
+      | Unknown
+
+  div(id="chart")
+    svg(style="width: 800px; height: 500px;")
 
   if item.units == "W"
     h3 Average Daily Usage:
     p #{averageValue} W
     p £#{energyCost} / month
 
-  div(id="chart")
-    svg(style="width: 800px; height: 500px;")
-  
-  h3 Values:
-  ul
-    each value in values
-      if value
-        li 
-          | #{value.timestampA} to #{value.timestampB} (#{value.readingcount} values) = #{value.value} #{item.units}
+  div(id="summarychart")
+    svg(style="width: 800px; height: 300px;")

@@ -1,60 +1,151 @@
+// Connect to Socket.IO
+var socket = io.connect('http://10.0.0.41/');
+var _data;
+var _chart;
+var _lastRedrawTime;
 
-/* Inspired by Lee Byron's test data generator. */
-function stream_layers(n, m, o) {
-  if (arguments.length < 3) o = 0;
-  function bump(a) {
-    var x = 1 / (.1 + Math.random()),
-        y = 2 * Math.random() - .5,
-        z = 10 / (.1 + Math.random());
-    for (var i = 0; i < m; i++) {
-      var w = (i / m - y) * z;
-      a[i] += x * Math.exp(-w * w);
-    }
-  }
-  return d3.range(n).map(function() {
-      var a = [], i;
-      for (i = 0; i < m; i++) a[i] = o + o * Math.random();
-      for (i = 0; i < 5; i++) bump(a);
-      return a.map(stream_index);
-    });
+function GetTimeAgo(isoTimeString, timeOffset)
+{
+	var now = new Date();
+	var nowTicks = Date.parse(now);
+	var dateTicks = Date.parse(isoTimeString);
+	var diff = Math.floor(((nowTicks - dateTicks) / 1000) + (timeOffset / 1000));
+	
+	var value = "<font color='";
+	if (diff < 30) { value += "green"; }
+	else if (diff < 90)	{ value += "orange"; }
+	else { value += "red"; }
+	value += "'>";
+	
+	var time = "";
+	var units = "";
+	if (diff < 120)	{ time = diff; units = "second"; }
+	else if (diff < (60*60)) { time = Math.round(diff / 60); units = "minute"; }
+	else if (diff < (60*60*24)) { time = Math.round(diff / 3600); units = "hour"; }
+	else { time = Math.round(diff / 86400); units = "day"; }
+	value += time;
+	value += " " + units;
+	if (time > 1) { value += "s"; }
+	value += " ago";
+	
+	value += "</font>";
+	return value;
 }
 
+// When chart data is received
+socket.on('graphdata', function(data) {
+	// If this is the data for the feed we have asked for
+	if (data.feedid == $('#feedinfo').attr('feedid'))
+	{
+		// Add a new graph
+		nv.addGraph(function() {
+		  var chart = nv.models.lineWithFocusChart();
+		  
+		  chart.xAxis
+			.rotateLabels(-45)
+			.tickFormat(function(xValue) { return d3.time.format('%b %d %H:%M:%S')(new Date(xValue)); });
+			
+		  chart.x2Axis.tickFormat(function(x) { return ""; }); 
+		  chart.yAxis.axisLabel('Value').tickFormat(d3.format(',.f'));
+		  chart.y2Axis.tickFormat(d3.format(',.f'));
 
-function stream_index(d, i) {
-  return {x: i, y: Math.max(0, d)};
-}
+		  d3.select('#chart svg')
+			  .datum(data.data)
+			  .transition().duration(500)
+			  .call(chart);
 
-nv.addGraph(function() {
-  var chart = nv.models.lineWithFocusChart();
+		  nv.utils.windowResize(chart.update);
 
-  chart.xAxis
-      .tickFormat(d3.format(',f'));
-  chart.x2Axis
-      .tickFormat(d3.format(',f'));
-
-  chart.yAxis
-      .tickFormat(d3.format(',.2f'));
-  chart.y2Axis
-      .tickFormat(d3.format(',.2f'));
-
-  d3.select('#chart svg')
-      .datum(testData())
-      .transition().duration(500)
-      .call(chart);
-
-  nv.utils.windowResize(chart.update);
-
-  return chart;
+		  _data = data.data;
+		  _chart = chart;
+		  _lastRedrawTime = new Date();
+		  
+		  return chart;
+		});
+	}
 });
 
+// When chart data is received
+socket.on('summarygraphdata', function(data) {
+	// If this is the data for the feed we have asked for
+	if (data.feedid == $('#feedinfo').attr('feedid'))
+	{
+		// Add a new graph
+		nv.addGraph(function() {
+		  var chart = nv.models.lineChart();
+		  
+		  chart.xAxis.tickFormat(d3.format(',f')); 
+		  chart.yAxis.tickFormat(d3.format(',.f'));
+		  
+		  d3.select('#summarychart svg')
+			  .datum(data.data)
+			  .transition().duration(500)
+			  .call(chart);
 
+		  nv.utils.windowResize(chart.update);
 
-function testData() {
-  return stream_layers(5,100,0.01).map(function(data, i) {
-    return { 
-      key: 'Stream' + i,
-      values: data
-    };
-  });
+		  return chart;
+		});
+	}
+});
+
+// Redraw the graph
+function redraw() {
+	d3.select('#chart svg')
+		.datum(_data)
+		.transition().duration(500)
+		.call(_chart);
 }
 
+// If we receive a socket.io message named 'tobrowser'
+socket.on('tobrowser', function (data) {
+	switch (data.message)
+	{
+		// If a channel feed has been updated
+		case 'channelfeedupdated':
+			// If this new value is for the currently displayed feed
+			if (data.item.id == $('#feedinfo').attr('feedid'))
+			{
+				// Work out the exact time the value is for and apply a timeoffset to correct for time
+				// differences between the server and the client
+				var date = new Date(data.item.lastupdated);
+				var timeOffset = date - new Date();
+				$("#lastupdated").attr('timeoffset', timeOffset);
+				$("#lastupdated").attr('isotime', date.toISOString());
+				$("#lastupdated").html(GetTimeAgo(date, timeOffset));
+				
+				// Set the current value text
+				var value = data.item.lastvalue + ' ' + data.item.units;
+				$("#lastvalue").html(value);
+				
+				// Add the new value to the graph and redraw it
+				_data[0].values.push({ x: date, y: data.item.lastvalue});
+				
+				// If we have not drawn for a minute
+				var timeSinceRedraw = (new Date()) - _lastRedrawTime;
+				if (timeSinceRedraw > 60000)
+				{
+					redraw();
+					_lastRedrawTime = new Date();
+				}
+			}
+			break;
+	}
+});
+
+function updateTimes()
+{
+	$(".datecell").each(function( index ) {
+		$(this).html(GetTimeAgo($(this).attr('isotime'), $(this).attr('timeoffset')));
+	});
+	
+	setTimeout(updateTimes, 2000);
+}
+
+$(document).ready(function() {
+	// Send a request straight away for chart data
+	socket.emit('graphdatarequest', { feedid : $('#feedinfo').attr('feedid') });
+	
+	// Update the last updated times
+	updateTimes();
+});

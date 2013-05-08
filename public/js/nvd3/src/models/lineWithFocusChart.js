@@ -15,7 +15,7 @@ nv.models.lineWithFocusChart = function() {
     , brush = d3.svg.brush()
     ;
 
-  var margin = {top: 30, right: 30, bottom: 30, left: 60}
+  var margin = {top: 30, right: 30, bottom: 85, left: 60}
     , margin2 = {top: 0, right: 30, bottom: 20, left: 60}
     , color = nv.utils.defaultColor()
     , width = null

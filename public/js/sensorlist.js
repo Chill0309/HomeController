@@ -26,7 +26,7 @@ function GetTimeAgo(isoTimeString)
 	return value;
 }
 
-var socket = io.connect('http://10.0.0.31/');
+var socket = io.connect('http://10.0.0.41/');
 
 socket.on('tobrowser', function (data) {
 	switch (data.message)
