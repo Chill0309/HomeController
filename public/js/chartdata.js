@@ -1,5 +1,5 @@
 // Connect to Socket.IO
-var socket = io.connect('http://10.0.0.41/');
+var socket = io.connect('http://redPi/');
 var _data;
 var _chart;
 var _lastRedrawTime;
@@ -74,8 +74,11 @@ socket.on('summarygraphdata', function(data) {
 		nv.addGraph(function() {
 		  var chart = nv.models.lineChart();
 		  
-		  chart.xAxis.tickFormat(d3.format(',f')); 
-		  chart.yAxis.tickFormat(d3.format(',.f'));
+		  chart.xAxis
+			.rotateLabels(-45)
+			.tickFormat(function(xValue) { return d3.time.format('%b %d')(new Date(xValue)); });
+
+			chart.yAxis.tickFormat(d3.format(',.f'));
 		  
 		  d3.select('#summarychart svg')
 			  .datum(data.data)

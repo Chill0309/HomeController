@@ -77,28 +77,42 @@ exports.GetGraphData = function(data, socket) {
 		socket.emit('graphdata', { feedid: feedId, data: result });
 	});
 
-	// Loop for data for the past 30 days
-	var searchTime2 = Date.now() - (1000 * 24 * 60 * 60 * 30);
-	var startDate2 = this.ConvertDateToMySQL(new Date(searchTime2));	
+	
+	
+	
+	startDate = this.ConvertDateToMySQL(new Date(0));
+	
 	
 	// Query data, group values per day
-	feedvalues.query("SELECT DAYOFYEAR(timestampA) AS DAY, YEAR(timestampA) AS YEAR,FLOOR(SUM(VALUE*readingcount)/SUM(readingcount)) AS average FROM feedvalues WHERE feedid=" + feedId + " AND timestampA >= '" + startDate2 + "' GROUP BY ((YEAR(timestampA) * 1000) + DAYOFYEAR(timestampA));",
+	feedvalues.query("SELECT TIMESTAMPDIFF(SECOND, '" + startDate + "', timestampA) as x, MIN(VALUE) AS minimum, MAX(VALUE) AS maximum, AVG(VALUE) AS average FROM feedvalues WHERE feedid=" + feedId +" GROUP BY DATE(timestampa)",
 					function(err, rows, fields) {
 		var chartData = [];
 		
 		// Loop through each point and add it to the data point collection
 		var dataPoints = [];
-		var i = 0;
+		var dataPoints2 = [];
+		var dataPoints3 = [];
 		rows.forEach(function(item) {
-			dataPoints.push({ x: i++, y: item.average});
+			dataPoints.push({ x: (item.x * 1000) - (60 * 60 * 1000), y: item.average});
+			dataPoints2.push({ x: (item.x * 1000) - (60 * 60 * 1000), y: item.minimum});
+			dataPoints3.push({ x: (item.x * 1000) - (60 * 60 * 1000), y: item.maximum});
 		});
 		chartData.push(dataPoints);
+		chartData.push(dataPoints2);
+		chartData.push(dataPoints3);
 		
 		// Map the data collection to a key/value pair to send to the graph
 		var result = chartData.map(function(data, i) {
+			var title = "";
+			switch (i) {
+				case 0: title = "Average"; break;
+				case 1: title = "Minimum"; break;
+				case 2: title = "Maximum"; break;
+			}
+			
 			return {
-			  key: 'Daily Summary' + i,
-			  values: data
+				key: title,
+				values: data
 			};
 		});
 		

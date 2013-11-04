@@ -27,6 +27,9 @@ module.exports = {
 					var msb = parseInt(messageBytes[i*2]);
 					var lsb = parseInt(messageBytes[(i*2) + 1]);
 					messageValues[i] = (msb<<8) + lsb;
+                                        if ((messageValues[i] & 0x8000) > 0) {
+                                                messageValues[i] = -(messageValues[i] & 0x7FFF);
+                                        }
 					message += messageValues[i] + ", ";
 				}
 

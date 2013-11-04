@@ -26,7 +26,7 @@ function GetTimeAgo(isoTimeString)
 	return value;
 }
 
-var socket = io.connect('http://10.0.0.41/');
+var socket = io.connect('http://redPi/');
 
 socket.on('tobrowser', function (data) {
 	switch (data.message)
